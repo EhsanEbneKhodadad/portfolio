@@ -151,6 +151,8 @@ main:focus { outline: none; }
   font-weight: 550;
 }
 .hero .lead { max-width: 45ch; }
+.hero .hero-result { margin-top: 12px; }
+.hero-result a, .context-link { color: var(--amber); text-decoration: underline; }
 .hero .actions { margin-top: 28px; }
 .hero-portrait {
   width: min(100%, 420px);

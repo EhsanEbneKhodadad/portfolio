@@ -20,7 +20,7 @@ export const projects: readonly Project[] = [
     problem: 'Auction search needed to support flexible matching and advanced filtering across approximately 1–2 million records.',
     role: 'Full Stack Engineer at Mozayedegar',
     solution: 'I implemented Elasticsearch search with fuzzy matching and advanced filters, built subscription and payment workflows, and automated deployments with Docker and GitLab CI/CD.',
-    impact: 'Query response times dropped from over 3 seconds to under 1 second.',
+    impact: 'Query response times for Elasticsearch search dropped from over 3 seconds to under 1 second. The search supported fuzzy matching and advanced filtering across approximately 1–2 million auction records.',
   },
   {
     slug: 'synaps-ai', name: 'Synaps AI', url: 'https://www.synapsai.ai/',
@@ -29,7 +29,7 @@ export const projects: readonly Project[] = [
     capabilities: [['Evaluation', 'Queue-based workers'], ['Video and documents', 'AWS Lambda'], ['Localization', '10 languages']],
     problem: 'AI evaluation had to handle variable workloads independently of web requests.',
     role: 'Full Stack Engineer at Synaps AI',
-    solution: 'I designed asynchronous pipelines using AWS SQS and autoscaling EC2 workers. Independent Lambda services handled transcription and PDF extraction, with configurable retries and administrator alerts for failed jobs.',
+    solution: 'I designed asynchronous pipelines using AWS SQS and autoscaling EC2 workers. Independent Lambda services handled transcription and PDF extraction, with configurable retries and administrator alerts for failed jobs. Queueing separated evaluation from the web request and let worker capacity scale independently. It also meant completion and failures had to be handled outside the original request.',
     impact: 'The React and .NET platform supported 10 languages.',
   },
   {

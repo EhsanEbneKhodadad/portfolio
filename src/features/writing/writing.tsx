@@ -1,3 +1,7 @@
+import { Breadcrumbs } from '@/components/breadcrumbs';
+import { StructuredData } from '@/components/structured-data';
+import { profile } from '@/content/profile';
+import { absoluteUrl } from '@/lib/seo';
 import Link from 'next/link';
 import Markdown from 'react-markdown';
 import { PageIntro } from '@/components/page-intro';
@@ -17,7 +21,14 @@ export function Writing() {
 export function Article({ article }: { article: (typeof articles)[number] }) {
   const minutes = Math.max(1, Math.ceil(article.content.trim().split(/\s+/).length / 220));
   return <article className="content page article">
-    <PageIntro label={<Link href="/writing">← Writing</Link>} title={article.title}>
+    <StructuredData data={{
+      '@context': 'https://schema.org', '@type': 'BlogPosting', headline: article.title,
+      description: article.summary, datePublished: article.date, url: absoluteUrl('/writing/' + article.slug),
+      image: absoluteUrl('/social-preview.png'),
+      author: { '@type': 'Person', name: profile.name, url: absoluteUrl('/about'), '@id': absoluteUrl('/about#person') },
+    }} />
+    <PageIntro label={<Breadcrumbs items={[{ name: 'Writing', href: '/writing' }, { name: article.title, href: '/writing/' + article.slug }]} />} title={article.title}>
+      <Link href="/about">{profile.name}</Link> ·
       <time dateTime={article.date}>{articleDate.format(new Date(article.date))}</time> · {minutes} min read
     </PageIntro>
     <div className="prose markdown"><Markdown skipHtml>{article.content}</Markdown></div>

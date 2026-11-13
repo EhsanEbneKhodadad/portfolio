@@ -1,3 +1,4 @@
+import { pageMetadata } from '@/lib/seo';
 import { notFound } from 'next/navigation';
 import { findProject, projects } from '@/content/projects';
 import { ProjectDetail } from '@/features/projects/projects';
@@ -10,7 +11,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props) {
   const project = findProject((await params).slug);
   if (!project) notFound();
-  return { title: project.name, description: project.summary };
+  const title = project.slug === 'den-auction'
+    ? 'DEN Auction Elasticsearch Case Study'
+    : project.name + ' Engineering Case Study';
+  return pageMetadata('/projects/' + project.slug, title, project.summary);
 }
 export default async function Page({ params }: Props) {
   const project = findProject((await params).slug);

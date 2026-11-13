@@ -46,3 +46,7 @@ The browser suite builds with controlled articles from `tests/fixtures/writing/`
 Set `BROWSER_EXECUTABLE` to a local Chromium browser path to use it for the browser suite.
 
 TickCar needs a confirmed personal role and outcome for a fuller case study. The résumé does not supply project screenshots or published articles. The résumé PDF remains outside the application.
+
+## Search and deployment
+
+Use the preferred HTTPS origin for SITE_URL. Configure HTTP and alternate-host redirects at the hosting provider. Set SITE_PREVIEW=1 before building nonproduction previews to emit noindex on public routes and omit the sitemap entries. Vercel preview builds are detected automatically.

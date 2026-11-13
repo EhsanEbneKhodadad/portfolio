@@ -9,7 +9,7 @@ test('public pages, case studies, sitemap, and unknown URLs', async ({ page, req
   await page.goto('/projects');
   await page.getByRole('link', { name: 'View case study for DEN Auction' }).click();
   await expect(page.getByRole('heading', { name: 'DEN Auction', exact: true })).toBeVisible();
-  await expect(page.getByText('Query response times dropped from over 3 seconds to under 1 second.')).toBeVisible();
+  await expect(page.getByText(/Query response times for Elasticsearch search dropped from over 3 seconds to under 1 second/)).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Projects' }))
     .toHaveAttribute('aria-current', 'location');
 
@@ -99,3 +99,27 @@ for (const width of [1440, 768, 390]) {
     await expect(projects.getByRole('link', { name: /DEN Auction/ })).toHaveAttribute('href', '/projects/den-auction');
   });
 }
+
+test('public pages use unique metadata and canonical URLs listed in the sitemap', async ({ page, request }) => {
+  const origin = 'https://portfolio.example';
+  const xml = await (await request.get('/sitemap.xml')).text();
+  const robots = await request.get('/robots.txt');
+  expect(robots.ok()).toBeTruthy();
+  expect(await robots.text()).toContain('Sitemap: ' + origin + '/sitemap.xml');
+  const titles = new Set<string>();
+  const descriptions = new Set<string>();
+  const routes = ['/', '/about', '/projects', '/skills', '/experience', '/contact',
+    '/projects/den-auction', '/projects/synaps-ai', '/projects/tickcar', '/writing', '/writing/qa-published'];
+  for (const route of routes) {
+    expect((await page.goto(route))?.status()).toBe(200);
+    const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
+    expect(new URL(canonical ?? '').href).toBe(origin + route);
+    expect(xml).toContain('<loc>' + origin + route + '</loc>');
+    titles.add(await page.title());
+    descriptions.add(await page.locator('meta[name="description"]').getAttribute('content') ?? '');
+  }
+  expect(titles.size).toBe(routes.length);
+  expect(descriptions.size).toBe(routes.length);
+  expect(descriptions.has('')).toBeFalsy();
+  expect((await request.get('/social-preview.png')).ok()).toBeTruthy();
+});

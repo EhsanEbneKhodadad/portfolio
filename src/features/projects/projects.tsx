@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/breadcrumbs';
 import Link from 'next/link';
 import { PageIntro } from '@/components/page-intro';
 import { projects, findProject } from '@/content/projects';
@@ -37,7 +38,7 @@ export function ProjectDetail({ project }: { project: Project }) {
     ['Impact', project.impact],
   ];
   return <article className="content page detail">
-    <PageIntro label={<Link href="/projects">← Projects</Link>} title={project.name}>{project.summary}</PageIntro>
+    <PageIntro label={<Breadcrumbs items={[{ name: 'Projects', href: '/projects' }, { name: project.name, href: '/projects/' + project.slug }]} />} title={project.name}>{project.summary}</PageIntro>
     <div className="actions project-actions">
       <a className="button" href={project.url}>Visit project <span aria-hidden="true">↗</span></a>
       <p className="eyebrow">{project.stack.join(' · ')}</p>

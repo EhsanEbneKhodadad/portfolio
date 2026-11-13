@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { PageIntro } from '@/components/page-intro';
 import { experience } from '@/content/experience';
 
@@ -12,5 +13,6 @@ export function Experience() {
         <ul>{achievements.map((achievement) => <li key={achievement}>{achievement}</li>)}</ul>
       </div>
     </section>)}
+    <p><Link className="context-link" href="/projects/synaps-ai">See the AWS evaluation pipeline in Synaps AI</Link></p>
   </div>;
 }
