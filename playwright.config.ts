@@ -12,7 +12,12 @@ export default defineConfig({
       : undefined,
   },
   webServer: {
-    command: 'npm run start -- --hostname 127.0.0.1 --port ' + port,
+    command: 'npm run build && npm run start -- --hostname 127.0.0.1 --port ' + port,
+    env: {
+      PORTFOLIO_BROWSER_FIXTURES: '1',
+      SITE_URL: 'https://portfolio.example',
+    },
     url: baseURL,
+    timeout: 180_000,
   },
 });

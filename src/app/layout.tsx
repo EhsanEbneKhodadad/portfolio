@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteNav } from '@/components/site-nav';
+import { mainRoutes, writingRoute } from '@/content/routes';
 import { profile } from '@/content/profile';
 import { articles } from '@/features/writing/articles';
 import { getSiteOrigin } from '@/lib/site-origin';
@@ -12,13 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(getSiteOrigin(process.env.SITE_URL, process.env.NODE_ENV === 'production')),
 };
 
-const navigation = [
-  { href: '/', label: 'Home' }, { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' }, { href: '/skills', label: 'Skills' },
-  { href: '/experience', label: 'Experience' },
-  ...(articles.length ? [{ href: '/writing', label: 'Writing' }] : []),
-  { href: '/contact', label: 'Contact' },
-];
+const navigation = articles.length ? [...mainRoutes, writingRoute] : mainRoutes;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="en">

@@ -7,8 +7,8 @@ npm ci
 npm run dev
 ```
 
-Open http://localhost:3000. For a production preview, set `SITE_URL`, run `npm run build`, then run `npm start`.
-Production builds require `SITE_URL` to be the public HTTP(S) origin with no path, query, or fragment. For local production testing, set `SITE_URL=https://portfolio.example` in your shell. Use the real origin for deployment.
+Open http://localhost:3000. For a production preview, copy `.env.example` to `.env.local`, run `npm run build`, then run `npm start`.
+Production builds require `SITE_URL` to be the public HTTP(S) origin with no path, query, or fragment. The sample environment file uses `https://ebnekhodadad.ir`. Update it if the deployment origin changes.
 
 ## Update content
 
@@ -38,6 +38,8 @@ npm run build
 npx playwright install chromium
 npm run test:browser
 ```
+
+The browser suite builds with controlled articles from `tests/fixtures/writing/` in a separate `.next-browser/` directory. Set `PLAYWRIGHT_PORT` if port 3100 is occupied.
 
 Set `BROWSER_EXECUTABLE` to a local Chromium browser path to use it for the browser suite.
 

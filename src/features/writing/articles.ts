@@ -32,5 +32,9 @@ export function readPublishedArticles(directory = join(process.cwd(), 'content',
     .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 }
 
-export const articles = readPublishedArticles();
+const writingDirectory = process.env.PORTFOLIO_BROWSER_FIXTURES === '1'
+  ? join(process.cwd(), 'tests', 'fixtures', 'writing')
+  : undefined;
+
+export const articles = readPublishedArticles(writingDirectory);
 export const articleDate = new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeZone: 'UTC' });

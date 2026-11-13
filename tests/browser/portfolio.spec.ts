@@ -49,20 +49,18 @@ test('mobile navigation opens, closes on Escape, and follows links', async ({ pa
   await expect(nav).toBeHidden();
 });
 
-test('writing visibility follows published content, and draft routes return 404', async ({ page, request }) => {
-  const withFixtures = process.env.TEST_WRITING_FIXTURES === '1';
-  await page.goto('/writing');
+test('published writing is discoverable and draft routes return 404', async ({ page, request }) => {
+  await page.goto('/');
   const nav = page.getByRole('navigation', { name: 'Main navigation' });
-  await expect(nav.getByRole('link', { name: 'Writing' })).toHaveCount(withFixtures ? 1 : 0);
-  await expect(page.getByRole('link', { name: /Published test article/ })).toHaveCount(withFixtures ? 1 : 0);
+  await nav.getByRole('link', { name: 'Writing' }).click();
+  await expect(page.getByRole('link', { name: /Draft test article/ })).toHaveCount(0);
+  await page.getByRole('link', { name: /Published test article/ }).click();
+  await expect(page.getByRole('heading', { name: 'Published test article' })).toBeVisible();
   expect((await request.get('/writing/qa-draft')).status()).toBe(404);
-  if (withFixtures) {
-    await page.getByRole('link', { name: /Published test article/ }).click();
-    await expect(page.getByRole('heading', { name: 'Published test article' })).toBeVisible();
-  }
+
   const xml = await (await request.get('/sitemap.xml')).text();
   expect(xml).not.toContain('qa-draft');
-  expect(xml.includes('/writing/qa-published</loc>')).toBe(withFixtures);
+  expect(xml).toContain('/writing/qa-published</loc>');
 });
 
 test('leaving through the brand resets the mobile menu on browser Back', async ({ page }) => {
