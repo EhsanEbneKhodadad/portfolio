@@ -49,38 +49,6 @@ test('mobile navigation opens, closes on Escape, and follows links', async ({ pa
   await expect(nav).toBeHidden();
 });
 
-test('hero responds to pointer movement, returns to rest, and supports keyboard and reduced motion', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto('/');
-  const hero = page.getByRole('group', { name: 'Explore the application stack' });
-  const layers = hero.getByRole('button');
-  const bounds = await hero.boundingBox();
-  if (!bounds) throw new Error('Missing hero');
-  await page.mouse.move(bounds.x + bounds.width * .6, bounds.y + bounds.height * .52);
-  await expect(layers.nth(1)).toHaveAttribute('data-active', 'true');
-  await expect.poll(() => layers.first().locator('.plane').evaluate((el) => getComputedStyle(el).transform)).not.toBe('matrix(1, 0, 0, 1, 0, 0)');
-  await page.mouse.move(0, 0);
-  await expect(layers.first()).toHaveAttribute('data-active', 'true');
-  await expect(layers.first().locator('.plane')).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await layers.nth(2).focus();
-  await page.keyboard.press('Enter');
-  await expect(layers.nth(2)).toHaveAttribute('aria-pressed', 'true');
-  await expect(layers.nth(2).locator('.plane')).toHaveCSS('transform', 'none');
-});
-
-test('touch can select a stack layer', async ({ browser }) => {
-  const page = await browser.newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
-  try {
-    await page.goto('/');
-    const data = page.getByRole('button', { name: /^Data:/ });
-    await data.tap();
-    await expect(data).toHaveAttribute('aria-pressed', 'true');
-  } finally {
-    await page.close();
-  }
-});
-
 test('writing visibility follows published content, and draft routes return 404', async ({ page, request }) => {
   const withFixtures = process.env.TEST_WRITING_FIXTURES === '1';
   await page.goto('/writing');
@@ -121,28 +89,15 @@ test('contact exposes email and professional links without a phone number', asyn
 });
 
 for (const width of [1440, 768, 390]) {
-  test('the stack artwork and labels fit inside their panel at ' + width + ' px', async ({ page }) => {
+  test('the portrait and featured projects render at ' + width + ' px', async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
-    const stack = page.getByRole('group', { name: 'Explore the application stack' });
-    const panel = await stack.boundingBox();
-    if (!panel) throw new Error('Missing stack panel');
-    const layers = await stack.getByRole('button').all();
-    expect(layers).toHaveLength(3);
-    let previousBottom = panel.y;
-    for (const layer of layers) {
-      const row = await layer.boundingBox();
-      if (!row) throw new Error('Missing stack layer');
-      expect(row.y).toBeGreaterThanOrEqual(previousBottom - 1);
-      previousBottom = row.y + row.height;
-      for (const selector of ['.plane', '.layer-name', '.layer-tools']) {
-        const box = await layer.locator(selector).boundingBox();
-        if (!box) throw new Error('Missing ' + selector);
-        expect(box.x).toBeGreaterThanOrEqual(panel.x);
-        expect(box.x + box.width).toBeLessThanOrEqual(panel.x + panel.width + 1);
-        expect(box.y + box.height).toBeLessThanOrEqual(panel.y + panel.height + 1);
-      }
-    }
-    if (width === 1440) expect(panel.y + panel.height).toBeLessThanOrEqual(900);
+    const portrait = page.getByRole('img', { name: 'Portrait of Ehsan EbneKhodadad' });
+    await expect(portrait).toBeVisible();
+    await expect.poll(() => portrait.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+    await expect(page.getByRole('heading', { name: 'Ehsan EbneKhodadad' })).toBeVisible();
+    const projects = page.getByRole('region', { name: 'Featured projects' });
+    await expect(projects.getByRole('link')).toHaveCount(3);
+    await expect(projects.getByRole('link', { name: /DEN Auction/ })).toHaveAttribute('href', '/projects/den-auction');
   });
 }
