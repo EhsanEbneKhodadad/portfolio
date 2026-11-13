@@ -2,10 +2,10 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import matter from 'gray-matter';
 
-export function readPublishedArticles(directory = join(process.cwd(), 'content', 'writing')) {
+function collectArticles(list: () => import('node:fs').Dirent[], read: (name: string) => string) {
   let entries;
   try {
-    entries = readdirSync(directory, { withFileTypes: true });
+    entries = list();
   } catch (error) {
     if (error instanceof Error && 'code' in error && error.code === 'ENOENT') return [];
     throw error;
@@ -18,7 +18,7 @@ export function readPublishedArticles(directory = join(process.cwd(), 'content',
       if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
         throw new Error('Invalid article filename: ' + name);
       }
-      const { content, data } = matter(readFileSync(join(directory, name), 'utf8'));
+      const { content, data } = matter(read(name));
       if (data.draft === true) return [];
       const { title, summary, date, draft } = data;
       if (draft !== false || typeof title !== 'string' || !title.trim() ||
@@ -32,9 +32,21 @@ export function readPublishedArticles(directory = join(process.cwd(), 'content',
     .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 }
 
-const writingDirectory = process.env.PORTFOLIO_BROWSER_FIXTURES === '1'
-  ? join(process.cwd(), 'tests', 'fixtures', 'writing')
-  : undefined;
+export function readPublishedArticles(directory: string) {
+  return collectArticles(
+    () => readdirSync(/*turbopackIgnore: true*/ directory, { withFileTypes: true }),
+    (name) => readFileSync(/*turbopackIgnore: true*/ join(directory, name), 'utf8'),
+  );
+}
 
-export const articles = readPublishedArticles(writingDirectory);
+export const articles = process.env.PORTFOLIO_BROWSER_FIXTURES === '1'
+  ? collectArticles(
+    () => readdirSync(join(process.cwd(), 'tests/fixtures/writing'), { withFileTypes: true }),
+    (name) => readFileSync(join(process.cwd(), 'tests/fixtures/writing', name), 'utf8'),
+  )
+  : collectArticles(
+    () => readdirSync(join(process.cwd(), 'content/writing'), { withFileTypes: true }),
+    (name) => readFileSync(join(process.cwd(), 'content/writing', name), 'utf8'),
+  );
+
 export const articleDate = new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeZone: 'UTC' });

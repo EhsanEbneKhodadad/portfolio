@@ -28,6 +28,8 @@ draft: true
 Article text.
 ```
 
+**Keep private drafts outside the public repository.** Use a local folder outside the checkout or a private repository. The `draft: true` flag hides an article from the site, while anyone with access to the repository can read committed Markdown, including its Git history. Copy an article into `content/writing/` when it is ready to share.
+
 ## Verification
 
 ```sh
