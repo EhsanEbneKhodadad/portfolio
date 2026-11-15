@@ -1,11 +1,11 @@
 ---
 title: "Fuzzy search across 1–2 million auction records"
-summary: "How fuzzy matching and advanced filters supported auction discovery in DEN Auction."
+summary: "How fuzzy matching and advanced filters supported auction discovery in mozayedegar.com."
 date: "2026-11-14"
 draft: false
 ---
 
-On [DEN Auction](/projects/den-auction), I built Elasticsearch search with fuzzy matching and advanced filtering across approximately 1–2 million auction records. Query response times dropped from over three seconds to under one second.
+At [mozayedegar.com](/projects/den-auction), I built Elasticsearch search with fuzzy matching and advanced filtering across approximately 1–2 million auction records. Query response times dropped from over three seconds to under one second.
 
 ## Matching text and narrowing results
 

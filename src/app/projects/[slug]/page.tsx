@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
   const project = findProject((await params).slug);
   if (!project) notFound();
   const title = project.slug === 'den-auction'
-    ? 'DEN Auction Elasticsearch Case Study'
+    ? 'mozayedegar.com Elasticsearch Case Study'
     : project.name + ' Engineering Case Study';
   return pageMetadata('/projects/' + project.slug, title, project.summary);
 }

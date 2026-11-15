@@ -13,7 +13,7 @@ type Project = {
 
 export const projects: readonly Project[] = [
   {
-    slug: 'den-auction', name: 'DEN Auction', url: 'https://den.auction',
+    slug: 'den-auction', name: 'mozayedegar.com', url: 'https://mozayedegar.com',
     summary: 'Auction aggregation with advanced search and subscription access.',
     stack: ['Next.js', '.NET', 'Elasticsearch', 'Docker'],
     capabilities: [['Auction discovery', 'Fuzzy search'], ['Premium listings', 'Subscriptions'], ['Delivery', 'Automated deployments']],

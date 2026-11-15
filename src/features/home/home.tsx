@@ -11,7 +11,7 @@ export function Home() {
         <h1 id="home-title">{profile.name}</h1>
         <p className="hero-role">{profile.role}</p>
         <p className="lead">{profile.bio}</p>
-        <p className="lead hero-result">At <Link href="/projects/den-auction">DEN Auction</Link>, I cut Elasticsearch query response times from over 3 seconds to under 1 second.</p>
+        <p className="lead hero-result">At <Link href="/projects/den-auction">mozayedegar.com</Link>, I cut Elasticsearch query response times from over 3 seconds to under 1 second.</p>
         <div className="actions">
           <Link className="button solid" href="/projects">View projects <span aria-hidden="true">→</span></Link>
           <Link className="button" href="/contact">Contact me</Link>

@@ -7,8 +7,9 @@ test('public pages, case studies, sitemap, and unknown URLs', async ({ page, req
   }
 
   await page.goto('/projects');
-  await page.getByRole('link', { name: 'View case study for DEN Auction' }).click();
-  await expect(page.getByRole('heading', { name: 'DEN Auction', exact: true })).toBeVisible();
+  await page.getByRole('link', { name: 'View case study for mozayedegar.com' }).click();
+  await expect(page.getByRole('heading', { name: 'mozayedegar.com', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Visit project/ })).toHaveAttribute('href', 'https://mozayedegar.com');
   await expect(page.getByText(/Query response times for Elasticsearch search dropped from over 3 seconds to under 1 second/)).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Projects' }))
     .toHaveAttribute('aria-current', 'location');
@@ -96,7 +97,7 @@ for (const width of [1440, 768, 390]) {
     await expect(page.getByRole('heading', { name: 'Ehsan EbneKhodadad' })).toBeVisible();
     const projects = page.getByRole('region', { name: 'Featured projects' });
     await expect(projects.getByRole('link')).toHaveCount(3);
-    await expect(projects.getByRole('link', { name: /DEN Auction/ })).toHaveAttribute('href', '/projects/den-auction');
+    await expect(projects.getByRole('link', { name: /mozayedegar\.com/ })).toHaveAttribute('href', '/projects/den-auction');
   });
 }
 
