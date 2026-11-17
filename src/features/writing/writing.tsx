@@ -31,6 +31,13 @@ export function Article({ article }: { article: (typeof articles)[number] }) {
       <Link href="/about">{profile.name}</Link> ·
       <time dateTime={article.date}>{articleDate.format(new Date(article.date))}</time> · {minutes} min read
     </PageIntro>
-    <div className="prose markdown"><Markdown skipHtml>{article.content}</Markdown></div>
+    <div className="prose markdown"><Markdown skipHtml components={{
+      a: ({ href, title, children }) => {
+        const site = absoluteUrl('/');
+        const url = href ? URL.parse(href, site) : null;
+        const external = url && /^https?:$/.test(url.protocol) && url.origin !== new URL(site).origin;
+        return <a href={href} title={title} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>{children}</a>;
+      },
+    }}>{article.content}</Markdown></div>
   </article>;
 }

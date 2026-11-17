@@ -114,6 +114,9 @@ main:focus { outline: none; }
 .project-card { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); gap: 28px; padding: 32px; }
 .project-card h2 { margin: 18px 0 12px; font-size: clamp(1.85rem, 3vw, 2.5rem); }
 .project-card .button { margin-top: 26px; }
+.project-screenshot { display: block; width: 100%; height: auto; border-radius: 12px; }
+.project-card .project-screenshot { grid-column: 1 / -1; }
+.detail .project-screenshot { margin-bottom: 28px; }
 .capabilities { padding-bottom: 22px; background: #111112; }
 .capabilities h3 { color: var(--muted); padding: 13px 18px; border-bottom: 1px solid var(--edge); }
 .capabilities dl { display: grid; gap: 8px; padding: 14px; }

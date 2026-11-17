@@ -28,7 +28,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <footer className="site-footer content">
         <Link href="/">{profile.name}</Link>
         <nav aria-label="Professional links">
-          {profile.social.map(({ label, href }) => <a key={href} href={href}>{label}</a>)}
+          {profile.social.map(({ label, href }) => <a key={href} href={href} target="_blank" rel="noopener noreferrer">{label}</a>)}
           <a href={'mailto:' + profile.email}>Email</a>
         </nav>
       </footer>
