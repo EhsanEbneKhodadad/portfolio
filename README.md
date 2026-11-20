@@ -78,3 +78,5 @@ The npm install explicitly replaces registry hosts from the lockfile and keeps i
 Local .env files, .npmrc credentials, dependencies, test fixtures, and old builds are excluded by .dockerignore. Public assets, optimized static files, and writing content are included in the runtime image. Keep private drafts outside the repository as described above.
 
 Mirror reference: [Hamravesh registry and package mirrors](https://hamravesh.com/blog/container-registry-mirroring-and-caching/).
+
+Docker builds default to `BUILD_WORKERS=1`, limiting Next.js page workers and the native Tokio/Rayon thread pools during the build. This prevents shared build hosts with many visible CPUs from spawning dozens of workers and exceeding container process/thread limits. Increase it with `--build-arg BUILD_WORKERS=2` only when the build environment has enough capacity. These thread-pool settings are confined to the builder stage. Normal local/CI builds retain automatic worker detection; set `NEXT_BUILD_WORKERS` to a positive integer if they also need a cap.
