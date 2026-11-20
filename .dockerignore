@@ -1,0 +1,14 @@
+.git
+node_modules
+.next
+.next-browser
+out
+coverage
+playwright-report
+test-results
+tests
+docs
+.env*
+.npmrc
+*.tsbuildinfo
+*.log
