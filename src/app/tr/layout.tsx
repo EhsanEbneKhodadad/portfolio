@@ -6,8 +6,8 @@ import { getSiteOrigin } from '@/lib/site-origin';
 import '../globals.css';
 
 const sourceSans = localFont({
-  src: '../../fonts/SourceSans3.ttf', variable: '--font-locale',
-  weight: '200 900', display: 'swap',
+  src: '../../fonts/SourceSans3.woff2', variable: '--font-locale',
+  weight: '200 900', display: 'swap', preload: false,
 });
 export const metadata: Metadata = {
   title: { default: tr.name + ' | ' + tr.role, template: '%s | ' + tr.name },

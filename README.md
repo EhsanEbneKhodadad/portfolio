@@ -43,7 +43,7 @@ npm run test:browser
 
 The browser suite builds with controlled articles from `tests/fixtures/writing/` in a separate `.next-browser/` directory. Set `PLAYWRIGHT_PORT` if port 3100 is occupied.
 
-Set `BROWSER_EXECUTABLE` to a local Chromium browser path to use it for the browser suite.
+On local Windows runs, the suite uses installed Google Chrome if Playwright's bundled Chromium is missing. CI continues to use the bundled browser. Set `BROWSER_EXECUTABLE` to explicitly select a local Chromium browser path.
 
 TickCar needs a confirmed personal role and outcome for a fuller case study. The résumé does not supply project screenshots or published articles. The résumé PDF remains outside the application.
 

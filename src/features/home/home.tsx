@@ -21,7 +21,7 @@ export function Home() {
         </div>
       </div>
       <div className="hero-portrait">
-        <Image src={portrait} alt={'Portrait of ' + profile.name} preload placeholder="blur"
+        <Image src={portrait} alt={'Portrait of ' + profile.name} loading="eager" fetchPriority="high" placeholder="blur"
           sizes="(max-width: 600px) 75vw, (max-width: 850px) 340px, 420px" />
       </div>
     </section>

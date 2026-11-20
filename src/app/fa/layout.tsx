@@ -6,8 +6,8 @@ import { getSiteOrigin } from '@/lib/site-origin';
 import '../globals.css';
 
 const vazirmatn = localFont({
-  src: '../../fonts/Vazirmatn.ttf', variable: '--font-locale',
-  weight: '100 900', display: 'swap',
+  src: '../../fonts/Vazirmatn.woff2', variable: '--font-locale',
+  weight: '100 900', display: 'swap', preload: false,
 });
 
 export const metadata: Metadata = {

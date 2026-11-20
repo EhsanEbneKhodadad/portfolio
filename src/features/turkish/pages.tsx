@@ -23,7 +23,7 @@ export function TurkishHome() {
         </div>
       </div>
       <div className="hero-portrait">
-        <Image src={portrait} alt={tr.name + ' portresi'} preload placeholder="blur"
+        <Image src={portrait} alt={tr.name + ' portresi'} loading="eager" fetchPriority="high" placeholder="blur"
           sizes="(max-width: 600px) 75vw, (max-width: 850px) 340px, 420px" />
       </div>
     </section>
