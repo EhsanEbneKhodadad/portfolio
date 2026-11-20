@@ -37,3 +37,18 @@ test('a missing writing directory is empty and an invalid directory still errors
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test('article translations require complete coverage and use English publication dates', async () => {
+  const { matchTranslations, getArticles } = await import('../src/features/writing/articles.ts');
+  const source = [{ slug: 'example', title: 'Source', summary: 'Summary', content: 'Body', date: '2026-01-01' }];
+  const translation = { ...source[0], title: 'عنوان', date: '2026-02-01' };
+  assert.throws(() => matchTranslations(source, [], 'fa'), /Missing fa translation/);
+  assert.equal(matchTranslations(source, [translation], 'fa')[0].date, source[0].date);
+  for (const locale of ['fa', 'tr']) {
+    assert.deepEqual(getArticles(locale).map(article => article.slug), getArticles('en').map(article => article.slug));
+    for (const [index, article] of getArticles(locale).entries()) {
+      assert.notEqual(article.content, getArticles('en')[index].content);
+    }
+    assert.deepEqual(matchTranslations([], [], locale), []);
+  }
+});
