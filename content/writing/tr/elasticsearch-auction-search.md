@@ -2,7 +2,7 @@
 title: "1–2 milyon açık artırma kaydı üzerinde yaklaşık eşleşmeli arama"
 summary: "Yaklaşık eşleştirme ve gelişmiş filtrelerin mozayedegar.com’da açık artırma ilanlarının keşfini nasıl desteklediği."
 date: "2026-11-14"
-draft: false
+draft: true
 ---
 
 [mozayedegar.com](/projects/mozayedegar)’da, yaklaşık 1–2 milyon açık artırma kaydı üzerinde yaklaşık eşleştirme ve gelişmiş filtreleme kullanan bir Elasticsearch araması geliştirdim. Sorgu yanıt süreleri üç saniyenin üzerinden bir saniyenin altına düştü.
