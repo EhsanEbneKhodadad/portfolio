@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { PageIntro } from '@/components/page-intro';
 import { skills } from '@/content/skills';
 
@@ -11,6 +10,5 @@ export function Skills() {
         <ul className="tools">{tools.map((tool) => <li key={tool}>{tool}</li>)}</ul>
       </section>)}
     </div>
-    <p><Link className="context-link" href="/projects/den-auction">See Elasticsearch in practice at mozayedegar.com</Link></p>
   </div>;
 }

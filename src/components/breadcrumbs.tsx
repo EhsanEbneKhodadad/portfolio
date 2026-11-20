@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { absoluteUrl } from '@/lib/seo';
 import { StructuredData } from './structured-data';
 
-export function Breadcrumbs({ items }: { items: { name: string; href: string }[] }) {
+export function Breadcrumbs({ items, label = 'Breadcrumb' }: { items: { name: string; href: string }[]; label?: string }) {
   return <>
-    <nav aria-label="Breadcrumb" className="eyebrow">
+    <nav aria-label={label} className="eyebrow">
       {items.map(({ name, href }, index) => <span key={href}>
         {index > 0 && <span aria-hidden="true"> / </span>}
         {index === items.length - 1 ? <span aria-current="page">{name}</span> : <Link href={href}>{name}</Link>}

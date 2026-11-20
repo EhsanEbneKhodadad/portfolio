@@ -222,3 +222,35 @@ main:focus { outline: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
 }
+
+
+.language-picker { position: relative; flex-shrink: 0; }
+.language-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 4px; width: 48px; min-height: 44px; padding: 6px; border: 1px solid var(--edge); border-radius: 12px; background: var(--background); cursor: pointer; }
+.language-toggle:hover { border-color: var(--amber); }
+.language-globe { font-size: 1.15rem; line-height: 1; }
+.language-options { position: absolute; inset-block-start: calc(100% + 8px); inset-inline-end: 0; z-index: 5; min-width: 150px; padding: 6px; border: 1px solid var(--edge); border-radius: 12px; background: var(--surface); box-shadow: 0 12px 24px #0009; }
+.language-options a { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 9px 12px; border-radius: 6px; }
+.language-options a:hover, .language-options a[aria-current] { background: #242021; color: var(--amber); }
+
+html[lang="fa"] body { font-family: var(--font-locale), Tahoma, "Segoe UI", sans-serif; line-height: 1.9; }
+html[lang="fa"] h1, html[lang="fa"] h2, html[lang="fa"] h3 { letter-spacing: 0; line-height: 1.6; }
+html[lang="fa"] .eyebrow, html[lang="fa"] .capabilities dd { font-family: inherit; }
+html[lang="fa"] .split-row ul { padding-left: 0; padding-right: 1.25rem; }
+html[lang="fa"] .hero { background: radial-gradient(ellipse at 23% 48%, #211912 0%, transparent 58%); }
+@media (min-width: 721px) and (max-width: 1280px) {
+  .site-header { gap: 14px; }
+  .site-header nav { gap: 14px; }
+  .header-contact { display: none; }
+}
+@media (max-width: 720px) {
+  .site-header { gap: 10px; }
+  .brand { font-size: .94rem; white-space: normal; }
+}
+
+html[lang="tr"] body { font-family: var(--font-locale), "Segoe UI", sans-serif; }
+html[lang="tr"] .eyebrow, html[lang="tr"] .capabilities dd { font-family: inherit; }
+@media (min-width: 721px) and (max-width: 1280px) {
+  html[lang="tr"] .site-header nav { gap: 11px; }
+}
+
+.name-family { white-space: nowrap; overflow-wrap: normal; }

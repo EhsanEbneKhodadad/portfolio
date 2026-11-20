@@ -1,3 +1,5 @@
+import { StructuredData } from '@/components/structured-data';
+import { websiteData } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
 import { profile } from '@/content/profile';
@@ -6,6 +8,7 @@ import portrait from './portrait.webp';
 
 export function Home() {
   return <>
+    <StructuredData data={websiteData('en')} />
     <section className="hero shell" aria-labelledby="home-title">
       <div className="hero-copy">
         <h1 id="home-title">{profile.name}</h1>

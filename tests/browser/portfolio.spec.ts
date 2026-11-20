@@ -20,7 +20,7 @@ test('public pages, case studies, sitemap, and unknown URLs', async ({ page, req
   }
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.ok()).toBeTruthy();
-  expect(await sitemap.text()).toContain('/projects/den-auction</loc>');
+  expect(await sitemap.text()).toContain('/projects/mozayedegar</loc>');
 });
 
 for (const width of [1440, 768, 390]) {
@@ -97,7 +97,7 @@ for (const width of [1440, 768, 390]) {
     await expect(page.getByRole('heading', { name: 'Ehsan EbneKhodadad' })).toBeVisible();
     const projects = page.getByRole('region', { name: 'Featured projects' });
     await expect(projects.getByRole('link')).toHaveCount(3);
-    await expect(projects.getByRole('link', { name: /mozayedegar\.com/ })).toHaveAttribute('href', '/projects/den-auction');
+    await expect(projects.getByRole('link', { name: /mozayedegar\.com/ })).toHaveAttribute('href', '/projects/mozayedegar');
   });
 }
 
@@ -110,7 +110,7 @@ test('public pages use unique metadata and canonical URLs listed in the sitemap'
   const titles = new Set<string>();
   const descriptions = new Set<string>();
   const routes = ['/', '/about', '/projects', '/skills', '/experience', '/contact',
-    '/projects/den-auction', '/projects/synaps-ai', '/projects/tickcar', '/writing', '/writing/qa-published'];
+    '/projects/mozayedegar', '/projects/synaps-ai', '/projects/tickcar', '/writing', '/writing/qa-published'];
   for (const route of routes) {
     expect((await page.goto(route))?.status()).toBe(200);
     const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');

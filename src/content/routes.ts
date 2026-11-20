@@ -7,4 +7,5 @@ export const mainRoutes = [
   { href: '/contact', label: 'Contact' },
 ];
 
+
 export const writingRoute = { href: '/writing', label: 'Writing' };

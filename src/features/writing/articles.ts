@@ -1,3 +1,4 @@
+import type { Locale } from '../../lib/i18n';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import matter from 'gray-matter';
@@ -49,4 +50,42 @@ export const articles = process.env.PORTFOLIO_BROWSER_FIXTURES === '1'
     (name) => readFileSync(join(process.cwd(), 'content/writing', name), 'utf8'),
   );
 
-export const articleDate = new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeZone: 'UTC' });
+
+const articlesFA = process.env.PORTFOLIO_BROWSER_FIXTURES === '1'
+  ? collectArticles(
+    () => readdirSync(join(process.cwd(), 'tests/fixtures/writing/fa'), { withFileTypes: true }),
+    (name) => readFileSync(join(process.cwd(), 'tests/fixtures/writing/fa', name), 'utf8'),
+  )
+  : collectArticles(
+    () => readdirSync(join(process.cwd(), 'content/writing/fa'), { withFileTypes: true }),
+    (name) => readFileSync(join(process.cwd(), 'content/writing/fa', name), 'utf8'),
+  );
+
+const articlesTR = process.env.PORTFOLIO_BROWSER_FIXTURES === '1'
+  ? collectArticles(
+    () => readdirSync(join(process.cwd(), 'tests/fixtures/writing/tr'), { withFileTypes: true }),
+    (name) => readFileSync(join(process.cwd(), 'tests/fixtures/writing/tr', name), 'utf8'),
+  )
+  : collectArticles(
+    () => readdirSync(join(process.cwd(), 'content/writing/tr'), { withFileTypes: true }),
+    (name) => readFileSync(join(process.cwd(), 'content/writing/tr', name), 'utf8'),
+  );
+
+export function matchTranslations(source: typeof articles, translations: typeof articles, locale: Locale) {
+  const bySlug = new Map(translations.map(article => [article.slug, article]));
+  return source.map(article => {
+    const translation = bySlug.get(article.slug);
+    if (!translation) throw new Error('Missing ' + locale + ' translation for published article: ' + article.slug);
+    return { ...translation, date: article.date };
+  });
+}
+
+const articlesByLocale = {
+  en: articles,
+  fa: matchTranslations(articles, articlesFA, 'fa'),
+  tr: matchTranslations(articles, articlesTR, 'tr'),
+};
+
+export function getArticles(locale: Locale) {
+  return articlesByLocale[locale];
+}

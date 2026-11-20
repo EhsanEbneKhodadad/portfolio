@@ -22,7 +22,7 @@ test('a published article appears while drafts and unknown slugs are excluded', 
 
 test('each résumé project has a unique stable detail slug', async () => {
   const { projects } = await import('../src/content/projects.ts');
-  assert.deepEqual(projects.map(({ slug }) => slug), ['den-auction', 'synaps-ai', 'tickcar']);
+  assert.deepEqual(projects.map(({ slug }) => slug), ['mozayedegar', 'synaps-ai', 'tickcar']);
 });
 
 test('a missing writing directory is empty and an invalid directory still errors', async () => {

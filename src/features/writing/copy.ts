@@ -1,0 +1,5 @@
+export const writingCopy = {
+  en: { label: 'Writing', title: 'Engineering notes', intro: 'Notes on building web products, debugging, and design trade-offs.', empty: 'No articles have been published yet.', minutes: 'min read', breadcrumb: 'Breadcrumb', metadataTitle: 'Engineering Notes', metadataDescription: 'Engineering notes on search, web development, and asynchronous systems.' },
+  fa: { label: 'نوشته‌ها', title: 'یادداشت‌های مهندسی', intro: 'یادداشت‌هایی درباره ساخت محصولات وب، اشکال‌زدایی و موازنه‌های طراحی.', empty: 'هنوز مقاله‌ای منتشر نشده است.', minutes: 'دقیقه مطالعه', breadcrumb: 'مسیر صفحه', metadataTitle: 'یادداشت‌های مهندسی', metadataDescription: 'یادداشت‌های مهندسی درباره جست‌وجو، توسعه وب و سیستم‌های غیرهم‌زمان.' },
+  tr: { label: 'Yazılar', title: 'Mühendislik notları', intro: 'Web ürünleri geliştirme, hata ayıklama ve tasarım ödünleşimleri üzerine notlar.', empty: 'Henüz yayımlanmış makale yok.', minutes: 'dk okuma', breadcrumb: 'Sayfa yolu', metadataTitle: 'Mühendislik Notları', metadataDescription: 'Arama, web geliştirme ve asenkron sistemler üzerine mühendislik notları.' },
+};

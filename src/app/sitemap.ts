@@ -1,8 +1,9 @@
 import type { MetadataRoute } from 'next';
 import { mainRoutes, writingRoute } from '@/content/routes';
-import { projects } from '@/content/projects';
 import { articles } from '@/features/writing/articles';
-import { absoluteUrl, isPreview } from '@/lib/seo';
+import { projects } from '@/content/projects';
+import { locales, localizedPath } from '@/lib/i18n';
+import { languageAlternates, absoluteUrl, isPreview } from '@/lib/seo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   if (isPreview()) return [];
@@ -12,7 +13,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...(articles.length ? [writingRoute.href] : []),
   ];
   return [
-    ...paths.map((path) => ({ url: absoluteUrl(path) })),
-    ...articles.map(({ slug, date }) => ({ url: absoluteUrl(writingRoute.href + '/' + slug), lastModified: date })),
+    ...paths.flatMap((path) => {
+      const languages = languageAlternates(path);
+      const translations = languages ? locales.map(locale => localizedPath(path, locale)) : [path];
+      return translations.map(route => ({
+        url: absoluteUrl(route),
+        ...(languages ? { alternates: { languages } } : {}),
+      }));
+    }),
+    ...articles.flatMap(({ slug, date }) => locales.map(locale => ({
+      url: absoluteUrl(localizedPath(writingRoute.href + '/' + slug, locale)),
+      lastModified: date,
+      alternates: { languages: languageAlternates(writingRoute.href + '/' + slug) },
+    }))),
   ];
 }

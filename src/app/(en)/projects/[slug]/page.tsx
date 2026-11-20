@@ -11,7 +11,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props) {
   const project = findProject((await params).slug);
   if (!project) notFound();
-  const title = project.slug === 'den-auction'
+  const title = project.slug === 'mozayedegar'
     ? 'mozayedegar.com Elasticsearch Case Study'
     : project.name + ' Engineering Case Study';
   return pageMetadata('/projects/' + project.slug, title, project.summary);
