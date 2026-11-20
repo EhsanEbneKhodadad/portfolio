@@ -190,8 +190,7 @@ main:focus { outline: none; }
   .hero-portrait { width: min(80%, 340px); }
   .skill-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 720px) {
-  :root { --gutter: 24px; }
+@media (max-width: 900px) {
   .site-header { min-height: 67px; }
   .menu-toggle { display: inline-flex; min-height: 40px; padding: 6px 15px; }
   .site-header nav {
@@ -206,6 +205,9 @@ main:focus { outline: none; }
   }
   .site-header nav[data-open="true"] { display: grid; gap: 2px; }
   .site-header nav a { padding: 9px 12px; }
+}
+@media (max-width: 720px) {
+  :root { --gutter: 24px; }
   .project-card { grid-template-columns: 1fr; padding: 22px; }
 }
 @media (max-width: 500px) {
@@ -237,19 +239,19 @@ html[lang="fa"] h1, html[lang="fa"] h2, html[lang="fa"] h3 { letter-spacing: 0; 
 html[lang="fa"] .eyebrow, html[lang="fa"] .capabilities dd { font-family: inherit; }
 html[lang="fa"] .split-row ul { padding-left: 0; padding-right: 1.25rem; }
 html[lang="fa"] .hero { background: radial-gradient(ellipse at 23% 48%, #211912 0%, transparent 58%); }
-@media (min-width: 721px) and (max-width: 1280px) {
+@media (min-width: 901px) and (max-width: 1280px) {
   .site-header { gap: 14px; }
   .site-header nav { gap: 14px; }
   .header-contact { display: none; }
 }
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .site-header { gap: 10px; }
   .brand { font-size: .94rem; white-space: normal; }
 }
 
 html[lang="tr"] body { font-family: var(--font-locale), "Segoe UI", sans-serif; }
 html[lang="tr"] .eyebrow, html[lang="tr"] .capabilities dd { font-family: inherit; }
-@media (min-width: 721px) and (max-width: 1280px) {
+@media (min-width: 901px) and (max-width: 1280px) {
   html[lang="tr"] .site-header nav { gap: 11px; }
 }
 

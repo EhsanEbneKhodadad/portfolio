@@ -180,14 +180,14 @@ for (const width of [1440, 768, 390]) {
       }
     }
     await page.goto('/fa');
-    if (width < 721) {
+    if (width <= 900) {
       await page.getByRole('button', { name: 'منو', exact: true }).click();
     }
     const navigation = page.getByRole('navigation', { name: 'ناوبری اصلی' });
     await expect(navigation.getByRole('link', { name: 'خانه', exact: true })).toHaveAttribute('aria-current', 'page');
     await navigation.getByRole('link', { name: 'درباره من', exact: true }).click();
     await expect(page).toHaveURL('/fa/about');
-    if (width < 721) {
+    if (width <= 900) {
       await page.getByRole('button', { name: 'منو', exact: true }).click();
     }
     await expect(navigation.getByRole('link', { name: 'خانه', exact: true })).not.toHaveAttribute('aria-current');
@@ -240,7 +240,7 @@ for (const width of [1440, 768, 390]) {
     await page.getByRole('button', { name: 'انتخاب زبان' }).click();
     await page.getByRole('link', { name: 'Türkçe', exact: true }).click();
     await expect(page).toHaveURL('/tr/about');
-    if (width < 721) await page.getByRole('button', { name: 'Menü', exact: true }).click();
+    if (width <= 900) await page.getByRole('button', { name: 'Menü', exact: true }).click();
     const nav = page.getByRole('navigation', { name: 'Ana gezinme' });
     await expect(nav.getByRole('link', { name: 'Ana sayfa', exact: true })).not.toHaveAttribute('aria-current');
     await nav.getByRole('link', { name: 'Projeler', exact: true }).click();
@@ -305,3 +305,23 @@ test('Writing pages remain available and display only published localized articl
     expect((await request.get(prefix + '/writing/qa-draft')).status()).toBe(404);
   }
 });
+
+for (const width of [768, 900]) {
+  test('tablet header fits wider system fonts at ' + width + ' px', async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    await page.addStyleTag({ content: '.site-header { font-family: Verdana, Arial, sans-serif; letter-spacing: .15px; }' });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    const menu = page.getByRole('button', { name: 'Menu', exact: true });
+    await expect(menu).toBeVisible();
+    await menu.click();
+    const nav = page.getByRole('navigation', { name: 'Main navigation' });
+    await expect(nav).toBeVisible();
+    const bounds = await nav.boundingBox();
+    expect(bounds?.x).toBeGreaterThanOrEqual(0);
+    expect((bounds?.x ?? width) + (bounds?.width ?? width)).toBeLessThanOrEqual(width);
+    await nav.getByRole('link', { name: 'About', exact: true }).click();
+    await expect(page).toHaveURL('/about');
+    await expect(nav).toBeHidden();
+  });
+}
